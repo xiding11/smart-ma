@@ -39,8 +39,8 @@ services:
       # comment out after initial setup
       BOOTSTRAP: "true"
     # README: To add local env variables uncomment the following line and add a .env file in the root directory
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     networks:
       - dittofeed-network-lite
   # useful for upgrading dittofeed

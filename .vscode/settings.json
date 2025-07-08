@@ -1,0 +1,37 @@
+{
+    "typescript.preferences.useAliasesForRenames": false,
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "eslint.workingDirectories": [
+        "./packages/api",
+        "./packages/dashboard",
+        "./packages/worker",
+        "./packages/backend-lib",
+        "./packages/admin-cli",
+        "./packages/lite"
+    ],
+    "eslint.validate": [
+        "typescript",
+        "typescriptreact"
+    ],
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/.next": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/.next": true,
+        "**/yarn.lock": true
+    },
+    "terminal.integrated.env.linux": {
+        "NODE_ENV": "development"
+    },
+    "notebook.codeActionsOnSave": {}
+}

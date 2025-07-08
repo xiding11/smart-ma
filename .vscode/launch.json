@@ -1,0 +1,87 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug API",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/packages/api/scripts/startServer.ts",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "development",
+        "DATABASE_URL": "postgresql://postgres:password@localhost:5432/dittofeed?connect_timeout=60",
+        "CLICKHOUSE_HOST": "http://localhost:8123",
+        "CLICKHOUSE_USER": "dittofeed",
+        "CLICKHOUSE_PASSWORD": "password",
+        "TEMPORAL_ADDRESS": "localhost:7233",
+        "API_HOST": "0.0.0.0",
+        "LOG_CONFIG": "true",
+        "BOOTSTRAP_EVENTS": "true"
+      },
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "console": "integratedTerminal",
+      "restart": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Debug Worker",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/packages/worker/scripts/startWorker.ts",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "NODE_ENV": "development",
+        "DATABASE_URL": "postgresql://postgres:password@localhost:5432/dittofeed?connect_timeout=60",
+        "CLICKHOUSE_HOST": "http://localhost:8123",
+        "CLICKHOUSE_USER": "dittofeed",
+        "CLICKHOUSE_PASSWORD": "password",
+        "TEMPORAL_ADDRESS": "localhost:7233",
+        "LOG_CONFIG": "true"
+      },
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "console": "integratedTerminal",
+      "restart": true,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Debug Dashboard (Attach)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "localRoot": "${workspaceFolder}/packages/dashboard",
+      "remoteRoot": "${workspaceFolder}/packages/dashboard",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "restart": true
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug All Services",
+      "configurations": [
+        "Debug API",
+        "Debug Worker"
+      ],
+      "stopAll": true
+    }
+  ]
+}

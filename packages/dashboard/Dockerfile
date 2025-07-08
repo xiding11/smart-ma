@@ -3,8 +3,20 @@ FROM node:20-slim AS builder
 
 # Accept the build argument in the builder stage
 ARG APP_VERSION
+ARG CLICKHOUSE_HOST
+ARG CLICKHOUSE_USER  
+ARG CLICKHOUSE_PASSWORD
+ARG DATABASE_URL
 
 WORKDIR /app
+
+# Set proxy environment variables
+ENV http_proxy=http://192.168.0.152:10811
+ENV https_proxy=http://192.168.0.152:10811
+ENV HTTP_PROXY=http://192.168.0.152:10811
+ENV HTTPS_PROXY=http://192.168.0.152:10811
+ENV no_proxy=localhost,127.0.0.1,::1
+ENV NO_PROXY=localhost,127.0.0.1,::1
 
 RUN apt-get update -y && \
     apt-get install -y openssl && \
@@ -19,6 +31,12 @@ RUN yarn workspaces focus isomorphic-lib emailo backend-lib dashboard
 RUN mkdir -p packages/dashboard/public/public && \
     curl https://raw.githubusercontent.com/dittofeed/sdk-web/7050a5b6f85fe0f9cab59043b782b65c9a911791/snippet/dittofeed.umd.js -o packages/dashboard/public/public/dittofeed.umd.js && \
     curl https://raw.githubusercontent.com/dittofeed/sdk-web/7050a5b6f85fe0f9cab59043b782b65c9a911791/snippet/dittofeed.es.js -o packages/dashboard/public/public/dittofeed.es.js
+
+# Set build-time environment variables to satisfy config validation
+ENV CLICKHOUSE_HOST=${CLICKHOUSE_HOST:-http://localhost:8123}
+ENV CLICKHOUSE_USER=${CLICKHOUSE_USER:-dittofeed}
+ENV CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-password}
+ENV DATABASE_URL=${DATABASE_URL:-postgresql://postgres:password@localhost:5432/dittofeed}
 
 RUN yarn workspace emailo build && \
     yarn workspace isomorphic-lib build && \
@@ -53,5 +71,13 @@ COPY --from=builder /app/.yarn ./.yarn
 COPY --from=builder /app/*.json /app/yarn.lock /app/.yarnrc.yml ./
 
 EXPOSE 3000
+
+# Clear proxy environment variables in production stage
+ENV http_proxy=
+ENV https_proxy=
+ENV HTTP_PROXY=
+ENV HTTPS_PROXY=
+ENV no_proxy=
+ENV NO_PROXY=
 
 CMD ["node", "server.js"]
