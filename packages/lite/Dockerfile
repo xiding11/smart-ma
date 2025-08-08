@@ -1,4 +1,4 @@
-FROM node:20-buster AS builder
+FROM node:20 AS builder
 
 # Accept the build argument in the builder stage
 ARG APP_VERSION
@@ -19,7 +19,6 @@ ENV NO_PROXY=localhost,127.0.0.1,::1
 
 RUN apt-get update -y && \
     apt-get install -y openssl
-
 COPY *.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 COPY ./packages/lite/*.json ./packages/lite/
@@ -64,7 +63,7 @@ COPY ./packages/lite/ ./packages/lite
 RUN yarn workspace lite build
 
 # Production image
-FROM node:20-buster AS runner
+FROM node:20 AS runner
 
 # Redefine the ARG in the production stage
 ARG APP_VERSION

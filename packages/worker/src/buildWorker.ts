@@ -16,6 +16,7 @@ import { OpenTelemetry } from "backend-lib/src/openTelemetry";
 import * as activities from "backend-lib/src/temporal/activities";
 import { CustomActivityInboundInterceptor } from "backend-lib/src/temporal/activityInboundInterceptor";
 import connectWorkflowCLient from "backend-lib/src/temporal/connectWorkflowClient";
+import { DittofeedWorkflowInboundInterceptor } from "backend-lib/src/temporal/workflowInboundCallsInterceptor";
 import workerLogger from "backend-lib/src/workerLogger";
 
 import config from "./config";
@@ -38,6 +39,8 @@ export async function buildWorker(otel?: OpenTelemetry) {
     maxCachedWorkflows,
     reuseContext: reuseV8Context,
     useTemporalVersioning,
+    maxConcurrentActivityTaskExecutions,
+    maxConcurrentLocalActivityExecutions,
   } = config();
 
   const sinks: WorkerOptions["sinks"] = {
@@ -61,6 +64,11 @@ export async function buildWorker(otel?: OpenTelemetry) {
             }),
           (ctx) => new OpenTelemetryActivityInboundInterceptor(ctx),
         ],
+        workflowModules: [
+          require.resolve(
+            "backend-lib/src/temporal/workflowInboundCallsInterceptor",
+          ),
+        ],
       },
       workerLogger,
     ),
@@ -72,21 +80,31 @@ export async function buildWorker(otel?: OpenTelemetry) {
     opts.reuseV8Context = reuseV8Context;
   }
 
-  if (maxConcurrentWorkflowTaskExecutions) {
+  if (maxConcurrentWorkflowTaskExecutions !== undefined) {
     opts.maxConcurrentWorkflowTaskExecutions =
       maxConcurrentWorkflowTaskExecutions;
   }
 
-  if (maxConcurrentActivityTaskPolls) {
+  if (maxConcurrentActivityTaskPolls !== undefined) {
     opts.maxConcurrentActivityTaskPolls = maxConcurrentActivityTaskPolls;
   }
 
-  if (maxConcurrentWorkflowTaskPolls) {
+  if (maxConcurrentWorkflowTaskPolls !== undefined) {
     opts.maxConcurrentWorkflowTaskPolls = maxConcurrentWorkflowTaskPolls;
   }
 
-  if (maxCachedWorkflows) {
+  if (maxCachedWorkflows !== undefined) {
     opts.maxCachedWorkflows = maxCachedWorkflows;
+  }
+
+  if (maxConcurrentActivityTaskExecutions !== undefined) {
+    opts.maxConcurrentActivityTaskExecutions =
+      maxConcurrentActivityTaskExecutions;
+  }
+
+  if (maxConcurrentLocalActivityExecutions !== undefined) {
+    opts.maxConcurrentLocalActivityExecutions =
+      maxConcurrentLocalActivityExecutions;
   }
 
   const { appVersion } = backendConfig();

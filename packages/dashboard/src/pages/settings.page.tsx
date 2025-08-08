@@ -87,6 +87,7 @@ import { HubspotIcon } from "../components/icons/hubspotIcon";
 import InfoBox from "../components/infoBox";
 import Layout from "../components/layout";
 import { MenuItemGroup } from "../components/menuItems/types";
+import { PermissionsTable } from "../components/permissionsTable";
 import { SubscriptionManagement } from "../components/subscriptionManagement";
 import WebhookSecretTable from "../components/webhookSecretTable";
 import { addInitialStateToProps } from "../lib/addInitialStateToProps";
@@ -306,124 +307,153 @@ const settingsSectionIds = {
   adminApiKey: "admin-api-key",
   hubspotIntegration: "hubspot-integration",
   workspaceMetadata: "workspace-metadata",
+  permissions: "permissions",
 } as const;
 
-const menuItems: MenuItemGroup[] = [
-  {
-    id: "data-sources",
-    title: "Data Sources",
-    type: "group",
-    children: [
-      {
-        id: "data-sources-segment-io",
-        title: "Segment",
-        type: "item",
-        url: `/settings#${settingsSectionIds.segmentSource}`,
-        icon: SimCardDownload,
-        description: "",
-      },
-    ],
-  },
-  {
-    id: "message-channels",
-    title: "Messaging Channels",
-    type: "group",
-    children: [
-      {
-        id: "email",
-        title: "Email",
-        type: "item",
-        url: `/settings#${settingsSectionIds.emailChannel}`,
-        icon: Mail,
-        description:
-          "Configure email settings, including the email provider credentials.",
-      },
-      {
-        id: "sms",
-        title: "SMS",
-        type: "item",
-        url: `/settings#${settingsSectionIds.smsChannel}`,
-        icon: SmsOutlined,
-        description:
-          "Configure email settings, including the email provider credentials.",
-      },
-      {
-        id: "webhook",
-        title: "Webhook",
-        type: "item",
-        url: `/settings#${settingsSectionIds.webhookChannel}`,
-        icon: Webhook,
-        description: "Configure webhook settings, including custom secrets.",
-      },
-    ],
-  },
-  {
-    id: "subscription-management",
-    title: "Subscription Management",
-    type: "group",
-    children: [],
-    url: `/settings#${settingsSectionIds.subscription}`,
-  },
-  {
-    id: "authentication",
-    title: "Authentication",
-    type: "group",
-    children: [
-      {
-        id: "write-key",
-        title: "Public Write Key",
-        type: "item",
-        url: `/settings#${settingsSectionIds.writeKey}`,
-        description: "Write key used to submit user data to Dittofeed.",
-        icon: Create,
-      },
-      {
-        id: "admin-api-key",
-        title: "Admin API Key",
-        type: "item",
-        url: `/settings#${settingsSectionIds.adminApiKey}`,
-        description: "API key used to authenticate against the Admin API.",
-        icon: Key,
-      },
-    ],
-  },
-  {
-    id: "integrations",
-    title: "Integrations",
-    type: "group",
-    children: [
-      {
-        id: "hubspot",
-        title: "Hubspot",
-        type: "item",
-        url: `/settings#${settingsSectionIds.hubspotIntegration}`,
-        icon: HubspotIcon,
-        description: "Configure Hubspot integration.",
-      },
-    ],
-    url: `/settings#${settingsSectionIds.hubspotIntegration}`,
-  },
-  {
-    id: settingsSectionIds.workspaceMetadata,
-    title: "Workspace Metadata",
-    type: "group",
-    children: [
-      {
-        id: "workspace-id",
-        title: "Workspace Id",
-        type: "item",
-        url: `/settings#${settingsSectionIds.workspaceMetadata}`,
-        icon: InfoOutlined,
-        description: "Copy workspace id to clipboard.",
-      },
-    ],
-    url: `/settings#${settingsSectionIds.workspaceMetadata}`,
-  },
-];
+function getMenuItems(authMode: string | undefined): MenuItemGroup[] {
+  const baseMenuItems: MenuItemGroup[] = [
+    {
+      id: "data-sources",
+      title: "Data Sources",
+      type: "group",
+      children: [
+        {
+          id: "data-sources-segment-io",
+          title: "Segment",
+          type: "item",
+          url: `/settings#${settingsSectionIds.segmentSource}`,
+          icon: SimCardDownload,
+          description: "",
+        },
+      ],
+    },
+    {
+      id: "message-channels",
+      title: "Messaging Channels",
+      type: "group",
+      children: [
+        {
+          id: "email",
+          title: "Email",
+          type: "item",
+          url: `/settings#${settingsSectionIds.emailChannel}`,
+          icon: Mail,
+          description:
+            "Configure email settings, including the email provider credentials.",
+        },
+        {
+          id: "sms",
+          title: "SMS",
+          type: "item",
+          url: `/settings#${settingsSectionIds.smsChannel}`,
+          icon: SmsOutlined,
+          description:
+            "Configure email settings, including the email provider credentials.",
+        },
+        {
+          id: "webhook",
+          title: "Webhook",
+          type: "item",
+          url: `/settings#${settingsSectionIds.webhookChannel}`,
+          icon: Webhook,
+          description: "Configure webhook settings, including custom secrets.",
+        },
+      ],
+    },
+    {
+      id: "subscription-management",
+      title: "Subscription Management",
+      type: "group",
+      children: [],
+      url: `/settings#${settingsSectionIds.subscription}`,
+    },
+    {
+      id: "authentication",
+      title: "Authentication",
+      type: "group",
+      children: [
+        {
+          id: "write-key",
+          title: "Public Write Key",
+          type: "item",
+          url: `/settings#${settingsSectionIds.writeKey}`,
+          description: "Write key used to submit user data to Dittofeed.",
+          icon: Create,
+        },
+        {
+          id: "admin-api-key",
+          title: "Admin API Key",
+          type: "item",
+          url: `/settings#${settingsSectionIds.adminApiKey}`,
+          description: "API key used to authenticate against the Admin API.",
+          icon: Key,
+        },
+      ],
+    },
+    {
+      id: "integrations",
+      title: "Integrations",
+      type: "group",
+      children: [
+        {
+          id: "hubspot",
+          title: "Hubspot",
+          type: "item",
+          url: `/settings#${settingsSectionIds.hubspotIntegration}`,
+          icon: HubspotIcon,
+          description: "Configure Hubspot integration.",
+        },
+      ],
+      url: `/settings#${settingsSectionIds.hubspotIntegration}`,
+    },
+    {
+      id: settingsSectionIds.workspaceMetadata,
+      title: "Workspace Metadata",
+      type: "group",
+      children: [
+        {
+          id: "workspace-id",
+          title: "Workspace Id",
+          type: "item",
+          url: `/settings#${settingsSectionIds.workspaceMetadata}`,
+          icon: InfoOutlined,
+          description: "Copy workspace id to clipboard.",
+        },
+      ],
+      url: `/settings#${settingsSectionIds.workspaceMetadata}`,
+    },
+  ];
+
+  // Only add permissions menu item in multi-tenant mode
+  if (authMode === "multi-tenant") {
+    baseMenuItems.push({
+      id: settingsSectionIds.permissions,
+      title: "Permissions",
+      type: "group",
+      children: [
+        {
+          id: "workspace-permissions",
+          title: "Workspace Permissions",
+          type: "item",
+          url: `/settings#${settingsSectionIds.permissions}`,
+          icon: Key,
+          description: "Manage workspace member roles and permissions.",
+        },
+      ],
+      url: `/settings#${settingsSectionIds.permissions}`,
+    });
+  }
+
+  return baseMenuItems;
+}
 
 function SettingsLayout(
   props: Omit<React.ComponentProps<typeof Layout>, "items">,
 ) {
+  const { authMode } = useAppStorePick(["authMode"]);
+  const menuItems = getMenuItems(authMode);
+
+  console.log("authMode", authMode);
   return (
     <>
       <DashboardHead />
@@ -1748,6 +1778,7 @@ function IntegrationSettings() {
 
 function SubscriptionManagementSettings() {
   const subscriptionGroups = useAppStore((store) => store.subscriptionGroups);
+  const { apiBase } = useAppStorePick(["apiBase"]);
   const [fromSubscriptionChange, setFromSubscriptionChange] =
     useState<boolean>(true);
   const [fromSubscribe, setFromSubscribe] = useState<boolean>(false);
@@ -1759,18 +1790,33 @@ function SubscriptionManagementSettings() {
       ? workspaceResult.value
       : null;
 
-  const subscriptions = subscriptionGroups.map((sg, i) => ({
+  // For unsubscribe simulation, unsubscribe all groups in the same channel as the first group
+  const firstSubscriptionGroup = subscriptionGroups[0];
+  const channelToUnsubscribeFrom = firstSubscriptionGroup?.channel;
+
+  const subscriptions = subscriptionGroups.map((sg) => ({
     name: sg.name,
     id: sg.id,
-    isSubscribed: !(i === 0 && fromSubscriptionChange && !fromSubscribe),
+    isSubscribed: !(
+      fromSubscriptionChange &&
+      !fromSubscribe &&
+      sg.channel === channelToUnsubscribeFrom
+    ),
+    channel: sg.channel,
   }));
 
   if (!workspace) {
     return null;
   }
+
   const changedSubscription = fromSubscriptionChange
     ? subscriptions[0]?.id
     : undefined;
+
+  const changedSubscriptionChannel =
+    fromSubscriptionChange && !fromSubscribe
+      ? channelToUnsubscribeFrom
+      : undefined;
 
   return (
     <Stack>
@@ -1817,17 +1863,19 @@ function SubscriptionManagementSettings() {
               key={`${fromSubscribe}-${fromSubscriptionChange}`}
               subscriptions={subscriptions}
               workspaceName={workspace.name}
-              onSubscriptionUpdate={async () => {}}
               subscriptionChange={
                 fromSubscribe
                   ? SubscriptionChange.Subscribe
                   : SubscriptionChange.Unsubscribe
               }
               changedSubscription={changedSubscription}
+              changedSubscriptionChannel={changedSubscriptionChannel}
               workspaceId={workspace.id}
               hash="example-hash"
               identifier="example@email.com"
               identifierKey="email"
+              apiBase={apiBase}
+              isPreview
             />
           </Paper>
         </Stack>
@@ -1911,6 +1959,26 @@ function Metadata() {
   );
 }
 
+function PermissionsSettings() {
+  const { authMode } = useAppStorePick(["authMode"]);
+
+  // Only render in multi-tenant mode
+  if (authMode !== "multi-tenant") {
+    return null;
+  }
+
+  return (
+    <Stack spacing={3}>
+      <SectionHeader
+        id={settingsSectionIds.permissions}
+        title="Permissions"
+        description="Manage workspace member roles and permissions."
+      />
+      <PermissionsTable />
+    </Stack>
+  );
+}
+
 function SettingsContents() {
   const { inTransition } = useAppStorePick(["inTransition"]);
   if (inTransition) {
@@ -1923,6 +1991,7 @@ function SettingsContents() {
       <AuthenticationSettings />
       <SubscriptionManagementSettings />
       <IntegrationSettings />
+      <PermissionsSettings />
       <Metadata />
     </>
   );

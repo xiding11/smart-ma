@@ -1,5 +1,5 @@
 # Rebuild the source code only when needed
-FROM node:20-buster AS builder
+FROM node:20 AS builder
 
 # Accept the build argument in the builder stage
 ARG APP_VERSION
@@ -19,9 +19,6 @@ ENV no_proxy=localhost,127.0.0.1,::1
 ENV NO_PROXY=localhost,127.0.0.1,::1
 
 RUN yarn set version 4.1.1
-
-RUN apt-get update -y && \
-    apt-get install -y openssl
 
 ENV PATH="$PATH:/root/.temporalio/bin"
 
