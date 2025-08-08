@@ -1,8 +1,4 @@
-import {
-  defaultEmailoContent,
-  EmailoJsonContent,
-  emptyEmailoContent,
-} from "emailo";
+import { defaultEmailoContent, EmailoJsonContent } from "emailo";
 
 import { assertUnreachable } from "./typeAssertions";
 import {
@@ -20,6 +16,12 @@ import {
 } from "./types";
 
 export const EmailEventSet = new Set<string>(EmailEventList);
+// Some upstream versions of emailo may not export emptyEmailoContent.
+// Provide a local fallback with the same shape to avoid build breaks.
+export const emptyEmailoContent: EmailoJsonContent = {
+  type: "doc",
+  content: [],
+};
 
 export function isEmailEvent(s: unknown): s is EmailEvent {
   if (typeof s !== "string") return false;
