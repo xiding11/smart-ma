@@ -1,5 +1,5 @@
 import { CompletionStatus, SecretResource } from "isomorphic-lib/src/types";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useEffect, useLayoutEffect } from "react";
 import { pick } from "remeda";
 import { create, UseBoundStore } from "zustand";
@@ -586,8 +586,6 @@ type UseStoreState = typeof initializeStore extends (
 export const useCreateStore = (
   serverInitialState?: Partial<AppState>,
 ): (() => AppStore) => {
-  const router = useRouter();
-
   useEffect(() => {
     // Function to run before page transition starts
     const handleRouteChange = () => {
@@ -599,11 +597,15 @@ export const useCreateStore = (
     };
 
     // Listen to routeChangeStart event
-    router.events.on("routeChangeStart", handleRouteChange);
+    if (typeof window !== "undefined") {
+      Router.events.on("routeChangeStart", handleRouteChange);
+    }
 
     // Cleanup listener on component unmount
     return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
+      if (typeof window !== "undefined") {
+        Router.events.off("routeChangeStart", handleRouteChange);
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
