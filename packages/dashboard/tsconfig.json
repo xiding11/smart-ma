@@ -12,6 +12,7 @@
     "test/**/*.js",
     "scripts/**/*.ts",
     "scripts/**/*.js",
+    "messages/**/*.json",
     "../../node_modules/jest-expect-message/types/index.d.ts"
   ],
   "exclude": ["node_modules", "dist"],

@@ -1,0 +1,337 @@
+{
+  "Header": {
+    "BranchSelect": {
+      "MainBranch": "主分支",
+      "YourBranches": "你的分支",
+      "NewBranch": "新建分支",
+      "CreateNewBranchTitle": "创建新分支",
+      "CreateNewBranchDescription": "基于主分支创建新分支",
+      "NewBranchLocalWarning": "你的分支将在本地创建。你需要提交并推送到 GitHub 才能看到它。",
+      "CreateNewBranchButton": "创建新分支"
+    },
+    "GitActions": {
+      "Actions": "操作",
+      "CommitAndPush": "提交并推送",
+      "OpenPullRequest": "打开拉取请求",
+      "GithubRepository": "Github 仓库"
+    }
+  },
+  "Navigation": {
+    "Dashboard": "控制面板",
+    "Journeys": "旅程",
+    "Segments": "用户分群",
+    "Broadcasts": "广播",
+    "Templates": "模板",
+    "Users": "用户",
+    "Events": "事件",
+    "Deliveries": "投递",
+    "Settings": "设置",
+    "UserProperties": "用户属性",
+    "SubscriptionGroups": "订阅组",
+    "Analysis": "分析",
+    "Groups": {
+      "Reporting": "报告",
+      "Messaging": "消息",
+      "Audience": "受众",
+      "Support": "支持"
+    },
+    "Items": {
+      "Analysis": "分析",
+      "Deliveries": "投递",
+      "Journeys": "旅程",
+      "MessageTemplates": "消息模板",
+      "Broadcasts": "广播",
+      "Users": "用户",
+      "Segments": "用户分群",
+      "UserProperties": "用户属性",
+      "SubscriptionGroups": "订阅组",
+      "Events": "事件",
+      "Documentation": "文档",
+      "ContactUs": "联系我们"
+    },
+    "Descriptions": {
+      "Analysis": "分析整个工作区的指标。",
+      "Deliveries": "查看哪些消息已投递给哪些用户。",
+      "Journeys": "查看、创建和编辑用户旅程。",
+      "MessageTemplates": "查看、创建和编辑消息模板。",
+      "Broadcasts": "向用户广播一次性消息。",
+      "Users": "查看用户及其历史记录。",
+      "Segments": "查看、创建和编辑用户分群。",
+      "UserProperties": "管理为用户记录和计算的属性。",
+      "SubscriptionGroups": "管理用户订阅组。",
+      "Events": "查看用户事件。",
+      "Documentation": "包含如何使用 Dittofeed 的说明和指南的文档。",
+      "ContactUs": "联系方式。",
+      "ComingSoon": "即将推出：{description}"
+    }
+  },
+  "Broadcasts": {
+    "Title": "广播",
+    "createAction": "创建广播",
+    "Description": "向用户分群发送一次性消息。",
+    "CreateNew": "新建广播",
+    "NoBroadcasts": "未找到广播。创建您的第一个广播以开始使用。",
+    "Status": {
+      "Draft": "草稿",
+      "Scheduled": "已安排",
+      "Running": "运行中",
+      "Completed": "已完成",
+      "Cancelled": "已取消"
+    },
+    "Actions": {
+      "Edit": "编辑",
+      "Delete": "删除",
+      "Duplicate": "复制",
+      "Send": "发送",
+      "Cancel": "取消"
+    }
+  },
+  "JourneyEditor": {
+    "Header": {
+      "Title": "旅程",
+      "Description": "基于用户行为自动化发送消息。"
+    },
+    "Actions": {
+      "CreateNew": "新建旅程",
+      "Edit": "编辑",
+      "Delete": "删除",
+      "Duplicate": "复制",
+      "Start": "启动",
+      "Stop": "停止",
+      "Pause": "暂停",
+      "Actions": "操作"
+    },
+    "Nodes": {
+      "Entry": {
+        "Label": "入口"
+      },
+      "Email": {
+        "Label": "发送邮件"
+      },
+      "Wait": {
+        "Label": "等待"
+      },
+      "Exit": {
+        "Label": "退出"
+      },
+      "Webhook": {
+        "Label": "Webhook"
+      },
+      "Sms": {
+        "Label": "发送短信"
+      },
+      "MobilePush": {
+        "Label": "移动推送"
+      }
+    },
+    "Settings": {
+      "Save": "保存更改",
+      "Cancel": "取消",
+      "Name": "旅程名称",
+      "Description": "描述",
+      "Status": "状态"
+    },
+    "Status": {
+      "NotStarted": "未开始",
+      "Running": "运行中",
+      "Paused": "已暂停",
+      "Broadcast": "广播"
+    },
+    "Table": {
+      "Name": "名称",
+      "Status": "状态",
+      "CreatedAt": "创建时间",
+      "NoJourneys": "未找到旅程。",
+      "SortBy": "排序"
+    },
+    "Time": {
+      "YourDevice": "您的设备"
+    },
+    "Pagination": {
+      "First": "首页",
+      "Previous": "上一页",
+      "Next": "下一页",
+      "Last": "末页",
+      "Page": "第",
+      "Of": "页，共"
+    },
+    "Dialog": {
+      "CreateTitle": "创建新旅程",
+      "Create": "创建",
+      "Creating": "创建中..."
+    },
+    "Notifications": {
+      "SaveSuccess": "旅程创建成功！",
+      "SaveError": "创建旅程失败。",
+      "DeleteSuccess": "旅程已成功删除！",
+      "DeleteError": "删除旅程失败。请重试。",
+      "LoadError": "加载旅程失败。"
+    }
+  },
+  "Segments": {
+    "Title": "用户分群",
+    "Description": "基于属性和行为创建用户分群。",
+    "CreateNew": "新建分群",
+    "NoSegments": "未找到分群。创建您的第一个分群以开始使用。",
+    "Actions": {
+      "Edit": "编辑",
+      "Delete": "删除",
+      "Duplicate": "复制",
+      "ViewUsers": "查看用户"
+    },
+    "Editor": {
+      "Name": "分群名称",
+      "Description": "描述",
+      "Conditions": "条件",
+      "AddCondition": "添加条件",
+      "Save": "保存分群",
+      "Cancel": "取消"
+    },
+    "UserCount": "用户数"
+  },
+  "Templates": {
+    "Title": "模板",
+    "Description": "创建和管理不同渠道的消息模板。",
+    "CreateNew": "新建模板",
+    "NoTemplates": "未找到模板。创建您的第一个模板以开始使用。",
+    "Types": {
+      "Email": "邮件",
+      "Sms": "短信",
+      "MobilePush": "移动推送",
+      "Webhook": "Webhook"
+    },
+    "Actions": {
+      "Edit": "编辑",
+      "Delete": "删除",
+      "Duplicate": "复制",
+      "Preview": "预览"
+    },
+    "Editor": {
+      "Name": "模板名称",
+      "Subject": "主题",
+      "Body": "内容",
+      "Save": "保存模板",
+      "Cancel": "取消",
+      "Preview": "预览"
+    }
+  },
+  "Users": {
+    "Title": "用户",
+    "Description": "查看和管理您的用户。",
+    "NoUsers": "未找到用户。",
+    "Search": "搜索用户...",
+    "UserDetails": "用户详情",
+    "Properties": "属性",
+    "Events": "事件",
+    "Deliveries": "投递",
+    "Actions": {
+      "ViewProfile": "查看资料",
+      "SendMessage": "发送消息",
+      "Export": "导出"
+    }
+  },
+  "Settings": {
+    "Title": "设置",
+    "Sections": {
+      "General": "通用",
+      "Email": "邮件",
+      "Sms": "短信",
+      "MobilePush": "移动推送",
+      "Webhook": "Webhook",
+      "Integration": "集成",
+      "Billing": "计费"
+    },
+    "General": {
+      "WorkspaceName": "工作区名称",
+      "Timezone": "时区",
+      "Language": "语言",
+      "Save": "保存设置"
+    },
+    "Email": {
+      "Provider": "邮件提供商",
+      "SmtpHost": "SMTP 主机",
+      "SmtpPort": "SMTP 端口",
+      "Username": "用户名",
+      "Password": "密码",
+      "FromEmail": "发件人邮箱",
+      "FromName": "发件人姓名"
+    }
+  },
+  "Common": {
+    "Actions": {
+      "Save": "保存",
+      "Cancel": "取消",
+      "Delete": "删除",
+      "Edit": "编辑",
+      "Create": "创建",
+      "Update": "更新",
+      "Search": "搜索",
+      "Filter": "筛选",
+      "Export": "导出",
+      "Import": "导入",
+      "Duplicate": "复制",
+      "Preview": "预览",
+      "Send": "发送",
+      "Back": "返回",
+      "Next": "下一步",
+      "Previous": "上一步",
+      "Close": "关闭",
+      "Submit": "提交",
+      "Reset": "重置",
+      "Confirm": "确认"
+    },
+    "Status": {
+      "Active": "活跃",
+      "Inactive": "非活跃",
+      "Draft": "草稿",
+      "Published": "已发布",
+      "Scheduled": "已安排",
+      "Running": "运行中",
+      "Completed": "已完成",
+      "Cancelled": "已取消",
+      "Failed": "失败",
+      "Pending": "待处理"
+    },
+    "Messages": {
+      "Loading": "加载中...",
+      "NoData": "暂无数据",
+      "Error": "发生错误",
+      "Success": "成功！",
+      "Warning": "警告",
+      "Info": "信息",
+      "Saving": "保存中...",
+      "Saved": "已保存",
+      "Deleting": "删除中...",
+      "Deleted": "已删除",
+      "ConfirmDelete": "确定要删除此项目吗？",
+      "UnsavedChanges": "您有未保存的更改。确定要离开吗？"
+    },
+    "Form": {
+      "Required": "此字段为必填项",
+      "Invalid": "格式无效",
+      "TooShort": "太短",
+      "TooLong": "太长",
+      "InvalidEmail": "无效的邮箱地址",
+      "InvalidUrl": "无效的 URL",
+      "InvalidPhone": "无效的电话号码",
+      "Name": "名称",
+      "Email": "邮箱",
+      "Phone": "电话",
+      "Description": "描述",
+      "Notes": "备注",
+      "Tags": "标签",
+      "CreatedAt": "创建时间",
+      "UpdatedAt": "更新时间"
+    },
+    "Pagination": {
+      "Previous": "上一页",
+      "Next": "下一页",
+      "Page": "页",
+      "Of": "共",
+      "PerPage": "每页",
+      "Total": "总计",
+      "Showing": "显示",
+      "Results": "结果"
+    }
+  }
+}

@@ -29,6 +29,8 @@ import MobileSection from "./headerContent/mobileSection";
 // project import
 import Profile from "./headerContent/profile";
 
+import { useNamespacedTranslations } from "../../../lib/translations";
+
 function BranchMenuItemContents({
   item,
   icon,
@@ -52,6 +54,7 @@ function BranchSelect() {
     "enableSourceControl",
     "sourceControlProvider",
   ]);
+  const t = useNamespacedTranslations('Header.BranchSelect');
 
   const [branch, setBranch] = React.useState("main");
   const [newBranchIsOpen, setNewBranchIsOpen] = React.useState(false);
@@ -111,12 +114,12 @@ function BranchSelect() {
         )}
       >
         <MenuItem value="main">
-          <BranchMenuItemContents item="main" icon={<Lock color="action" />} />
+          <BranchMenuItemContents item={t('MainBranch')} icon={<Lock color="action" />} />
         </MenuItem>
         <Divider />
-        <ListSubheader sx={{ fontSize: ".75rem" }}>your branches</ListSubheader>
+        <ListSubheader sx={{ fontSize: ".75rem" }}>{t('YourBranches')}</ListSubheader>
         <MenuItem value={newBranch}>
-          <BranchMenuItemContents item="New Branch" />
+          <BranchMenuItemContents item={t('NewBranch')} />
         </MenuItem>
         {availableBranches.map((ab) => (
           <MenuItem value={ab} key={ab}>
@@ -134,18 +137,17 @@ function BranchSelect() {
         }}
       >
         <DialogTitle>
-          <Typography variant="h5">Create a new branch</Typography>
+          <Typography variant="h5">{t('CreateNewBranchTitle')}</Typography>
         </DialogTitle>
 
         <DialogContent>
           <Stack direction="column" spacing={1} alignItems="center">
             <Box sx={{ width: "100%" }}>
-              Create a new branch based off of the main branch
+              {t('CreateNewBranchDescription')}
             </Box>
             <TextField defaultValue="maxgurewitz/" sx={{ width: "100%" }} />
             <Typography variant="caption" sx={{ width: "100%" }}>
-              Your branch will be created locally. You will need to commit and
-              push it to see it in GitHub.
+              {t('NewBranchLocalWarning')}
             </Typography>
             <Stack
               direction="row"
@@ -159,7 +161,7 @@ function BranchSelect() {
                 sx={{ textTransform: "none" }}
                 onClick={handleCreateNewBranch}
               >
-                Create new branch
+                {t('CreateNewBranchButton')}
               </LoadingButton>
             </Stack>
           </Stack>
@@ -224,6 +226,7 @@ function GitActionsSelect() {
   ]);
   const [isDiffOpen, setDiffOpen] = React.useState(false);
   const handleClose = () => setDiffOpen(false);
+  const t = useNamespacedTranslations('Header.GitActions');
 
   if (!enableSourceControl || !sourceControlProvider) {
     return null;
@@ -271,14 +274,14 @@ function GitActionsSelect() {
         renderValue={() => (
           <Stack spacing={1} direction="row" alignItems="center">
             <GitBranchIcon />
-            <Box>Actions</Box>
+            <Box>{t('Actions')}</Box>
           </Stack>
         )}
       >
-        <MenuItem value={GitAction.CommitAndPush}>Commit and Push</MenuItem>
+        <MenuItem value={GitAction.CommitAndPush}>{t('CommitAndPush')}</MenuItem>
         <MenuItem value={GitAction.OpenPR}>
           <ExternalLink href="https://github.com/dittofeed/dittofeed/compare/main...maxgurewitz%2Fmy-feature-branch?body=&expand=1&title=remove+delay+and+message+nodes">
-            Open Pull Request
+            {t('OpenPullRequest')}
           </ExternalLink>
         </MenuItem>
       </Select>
@@ -307,6 +310,7 @@ function HeaderContent() {
     theme.breakpoints.down("md"),
   );
   const { features } = useAppStorePick(["features"]);
+  const t = useNamespacedTranslations('Header.GitActions');
 
   return (
     <>
@@ -321,7 +325,7 @@ function HeaderContent() {
           target="_blank"
           disableRipple
           color="secondary"
-          title="Github Repository"
+          title={t('GithubRepository')}
           sx={{ color: "text.primary", bgcolor: "grey.100" }}
         >
           <GitHub />

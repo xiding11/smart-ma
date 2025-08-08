@@ -9,7 +9,15 @@
     "packages/*"
   ],
   "scripts": {
-    "admin": "yarn workspace admin-cli cli \"$@\""
+    "admin": "yarn workspace admin-cli cli \"$@\"",
+    "dev:apps": "concurrently \"yarn workspace api dev\" \"yarn workspace dashboard dev\" \"yarn workspace worker dev\"",
+    "dev:api": "yarn workspace api dev",
+    "dev:dashboard": "yarn workspace dashboard dev",
+    "dev:worker": "yarn workspace worker dev",
+    "dev:all": "yarn dev:infra && yarn dev:apps",
+    "dev:infra": "docker-compose up -d postgres temporal clickhouse-server",
+    "dev:stop": "docker-compose down && pkill -f \"yarn workspace.*dev\" || true",
+    "bootstrap": "yarn install && yarn workspaces foreach run build && yarn admin bootstrap"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,6 +25,7 @@
     "@types/node": "20.14.8",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
+    "concurrently": "^9.2.0",
     "eslint": "^8.43.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -74,5 +83,8 @@
     "date-fns-tz": "2.0.0",
     "@fastify/cookie": "9.0.4"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.1.1",
+  "dependencies": {
+    "puppeteer": "^24.12.1"
+  }
 }

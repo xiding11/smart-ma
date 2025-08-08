@@ -608,45 +608,46 @@ export const useCreateStore = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // For SSR & SSG, always use a new store.
-  if (typeof window === "undefined") {
-    return () =>
-      initializeStore({
+  return () => {
+    // For SSR & SSG, always use a new store.
+    if (typeof window === "undefined") {
+      return initializeStore({
         ...serverInitialState,
       });
-  }
-
-  const isReusingStore = Boolean(store);
-  // For CSR, always re-use same store.
-  const initializedStore: AppStore =
-    store ?? initializeStore(serverInitialState);
-
-  store = initializedStore;
-
-  // And if initialState changes, then merge states in the next render cycle.
-  //
-  // eslint complaining "React Hooks must be called in the exact same order in every component render"
-  // is ignorable as this code runs in same order in a given environment
-  // TODO: Remove this warning with the following technique
-  // https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useLayoutEffect(() => {
-    // serverInitialState is undefined for CSR pages. It is up to you if you want to reset
-    // states on CSR page navigation or not. I have chosen not to, but if you choose to,
-    // then add `serverInitialState = getDefaultInitialState()` here.
-    if (serverInitialState && isReusingStore) {
-      initializedStore.setState(
-        {
-          // re-use functions from existing store
-          ...initializedStore.getState(),
-          // but reset all other properties.
-          ...serverInitialState,
-          inTransition: false,
-        },
-        true, // replace states, rather than shallow merging
-      );
     }
-  });
 
-  return () => initializedStore;
+    const isReusingStore = Boolean(store);
+    // For CSR, always re-use same store.
+    const initializedStore: AppStore =
+      store ?? initializeStore(serverInitialState);
+
+    store = initializedStore;
+
+    // And if initialState changes, then merge states in the next render cycle.
+    //
+    // eslint complaining "React Hooks must be called in the exact same order in every component render"
+    // is ignorable as this code runs in same order in a given environment
+    // TODO: Remove this warning with the following technique
+    // https://medium.com/@alexandereardon/uselayouteffect-and-ssr-192986cdcf7a
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useLayoutEffect(() => {
+      // serverInitialState is undefined for CSR pages. It is up to you if you want to reset
+      // states on CSR page navigation or not. I have chosen not to, but if you choose to,
+      // then add `serverInitialState = getDefaultInitialState()` here.
+      if (serverInitialState && isReusingStore) {
+        initializedStore.setState(
+          {
+            // re-use functions from existing store
+            ...initializedStore.getState(),
+            // but reset all other properties.
+            ...serverInitialState,
+            inTransition: false,
+          },
+          true, // replace states, rather than shallow merging
+        );
+      }
+    });
+
+    return initializedStore;
+  };
 };

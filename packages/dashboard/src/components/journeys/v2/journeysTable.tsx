@@ -60,6 +60,7 @@ import Link from "next/link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { useUniversalRouter } from "../../../lib/authModeProvider";
+import { useNamespacedTranslations } from "../../../lib/translations";
 import { useCreateJourneyMutation } from "../../../lib/useCreateJourneyMutation";
 import { useDeleteJourneyMutation } from "../../../lib/useDeleteJourneyMutation";
 import { useJourneyMutation } from "../../../lib/useJourneyMutation";
@@ -70,22 +71,22 @@ import { JourneyStateForDraft, journeyStateToDraft } from "../store";
 
 type Row = GetJourneysResponseItem;
 
-function humanizeJourneyStatus(status: JourneyResourceStatus): string {
+function humanizeJourneyStatus(status: JourneyResourceStatus, t: (key: string) => string): string {
   switch (status) {
     case "NotStarted":
-      return "Not Started";
+      return t("Status.NotStarted");
     case "Running":
-      return "Running";
+      return t("Status.Running");
     case "Paused":
-      return "Paused";
+      return t("Status.Paused");
     case "Broadcast":
-      return "Broadcast";
+      return t("Status.Broadcast");
     default:
       return status;
   }
 }
 
-function ActionsCell({ row }: CellContext<Row, unknown>) {
+function ActionsCell({ row, t }: CellContext<Row, unknown> & { t: (key: string) => string }) {
   const theme = useTheme();
   const { id, status } = row.original;
   const router = useUniversalRouter();
@@ -126,7 +127,7 @@ function ActionsCell({ row }: CellContext<Row, unknown>) {
 
   return (
     <>
-      <Tooltip title="Actions">
+      <Tooltip title={t('Actions.Actions')}>
         <IconButton
           aria-label="actions"
           onClick={handleClick}
@@ -143,19 +144,19 @@ function ActionsCell({ row }: CellContext<Row, unknown>) {
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleEdit}>
           <OpenInNewIcon fontSize="small" sx={{ mr: 1 }} />
-          Edit
+          {t('Actions.Edit')}
         </MenuItem>
         {(status === "Running" || status === "Paused") && (
           <MenuItem onClick={handleToggleStatus} disabled={isToggleInProgress}>
             {status === "Running" ? (
               <>
                 <PauseIcon fontSize="small" sx={{ mr: 1 }} />
-                Pause
+                {t('Actions.Pause')}
               </>
             ) : (
               <>
                 <PlayArrowIcon fontSize="small" sx={{ mr: 1 }} />
-                Start
+                {t('Actions.Start')}
               </>
             )}
           </MenuItem>
@@ -166,14 +167,14 @@ function ActionsCell({ row }: CellContext<Row, unknown>) {
           disabled={isDeleteInProgress}
         >
           <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
-          Delete
+          {t('Actions.Delete')}
         </MenuItem>
       </Menu>
     </>
   );
 }
 
-function NameCell({ row, getValue }: CellContext<Row, unknown>) {
+function NameCell({ row, getValue, t }: CellContext<Row, unknown> & { t: (key: string) => string }) {
   const name = getValue<string>();
   const journeyId = row.original.id;
   const universalRouter = useUniversalRouter();
@@ -193,7 +194,7 @@ function NameCell({ row, getValue }: CellContext<Row, unknown>) {
           {name}
         </Typography>
       </Tooltip>
-      <Tooltip title="Edit Journey">
+      <Tooltip title={t('Actions.Edit')}>
         <IconButton size="small" component={Link} href={href}>
           <OpenInNewIcon fontSize="small" />
         </IconButton>
@@ -202,14 +203,14 @@ function NameCell({ row, getValue }: CellContext<Row, unknown>) {
   );
 }
 
-function StatusCell({ getValue }: CellContext<Row, unknown>) {
+function StatusCell({ getValue, t }: CellContext<Row, unknown> & { t: (key: string) => string }) {
   const rawStatus = getValue<JourneyResourceStatus>();
   return (
-    <Typography variant="body2">{humanizeJourneyStatus(rawStatus)}</Typography>
+    <Typography variant="body2">{humanizeJourneyStatus(rawStatus, t)}</Typography>
   );
 }
 
-function TimeCell({ getValue }: CellContext<Row, unknown>) {
+function TimeCell({ getValue, t }: CellContext<Row, unknown> & { t: (key: string) => string }) {
   const timestamp = getValue<number>();
   if (!timestamp) return null;
   const date = new Date(timestamp);
@@ -220,7 +221,7 @@ function TimeCell({ getValue }: CellContext<Row, unknown>) {
         <Computer sx={{ color: "text.secondary" }} />
         <Stack>
           <Typography variant="body2" color="text.secondary">
-            Your device
+            {t('Time.YourDevice')}
           </Typography>
           <Typography>
             {new Intl.DateTimeFormat("en-US", {
@@ -270,6 +271,7 @@ function TimeCell({ getValue }: CellContext<Row, unknown>) {
 
 export default function JourneysTable() {
   const router = useUniversalRouter();
+  const t = useNamespacedTranslations('JourneyEditor');
   const nameInputRef = useRef<HTMLInputElement>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [journeyName, setJourneyName] = useState("");
@@ -292,39 +294,39 @@ export default function JourneysTable() {
 
   useEffect(() => {
     if (query.isError) {
-      setSnackbarMessage("Failed to load journeys.");
+      setSnackbarMessage(t('Notifications.LoadError'));
       setSnackbarOpen(true);
     }
-  }, [query.isError]);
+  }, [query.isError, t]);
 
   const columns = useMemo<ColumnDef<Row>[]>(
     () => [
       {
         id: "name",
-        header: "Name",
+        header: t('Table.Name'),
         accessorKey: "name",
-        cell: NameCell,
+        cell: (props) => <NameCell {...props} t={t} />,
       },
       {
         id: "status",
-        header: "Status",
+        header: t('Table.Status'),
         accessorKey: "status",
-        cell: StatusCell,
+        cell: (props) => <StatusCell {...props} t={t} />,
       },
       {
         id: "createdAt",
-        header: "Created At",
+        header: t('Table.CreatedAt'),
         accessorKey: "createdAt",
-        cell: TimeCell,
+        cell: (props) => <TimeCell {...props} t={t} />,
       },
       {
         id: "actions",
         header: "",
         size: 70,
-        cell: ActionsCell,
+        cell: (props) => <ActionsCell {...props} t={t} />,
       },
     ],
-    [],
+    [t],
   );
 
   const table = useReactTable({
@@ -353,14 +355,14 @@ export default function JourneysTable() {
         { name: journeyName.trim(), draft },
         {
           onSuccess: (data) => {
-            setSnackbarMessage("Journey created successfully!");
+            setSnackbarMessage(t('Notifications.SaveSuccess'));
             setSnackbarOpen(true);
             setDialogOpen(false);
             setJourneyName("");
             router.push(`/journeys/v2`, { id: data.id });
           },
           onError: () => {
-            setSnackbarMessage("Failed to create journey.");
+            setSnackbarMessage(t('Notifications.SaveError'));
             setSnackbarOpen(true);
           },
         },
@@ -381,14 +383,14 @@ export default function JourneysTable() {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="h4">Journeys</Typography>
+          <Typography variant="h4">{t('Header.Title')}</Typography>
           <Button
             variant="contained"
             sx={greyButtonStyle}
             onClick={() => setDialogOpen(true)}
             startIcon={<AddIcon />}
           >
-            New Journey
+            {t('Actions.CreateNew')}
           </Button>
         </Stack>
         <TableContainer component={Paper}>
@@ -428,7 +430,7 @@ export default function JourneysTable() {
                               onClick={header.column.getToggleSortingHandler()}
                               size="small"
                               sx={{ ml: 0.5 }}
-                              aria-label={`Sort by ${header.column.columnDef.header}`}
+                              aria-label={`${t('Table.SortBy')} ${header.column.columnDef.header}`}
                             >
                               {{
                                 asc: <ArrowUpward fontSize="inherit" />,
@@ -466,7 +468,7 @@ export default function JourneysTable() {
                 journeysData.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={columns.length} align="center">
-                      No journeys found.
+                      {t('Table.NoJourneys')}
                     </TableCell>
                   </TableRow>
                 )}
@@ -486,21 +488,21 @@ export default function JourneysTable() {
                         disabled={!table.getCanPreviousPage()}
                         startIcon={<KeyboardDoubleArrowLeft />}
                       >
-                        First
+                        {t('Pagination.First')}
                       </GreyButton>
                       <GreyButton
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                         startIcon={<KeyboardArrowLeft />}
                       >
-                        Previous
+                        {t('Pagination.Previous')}
                       </GreyButton>
                       <GreyButton
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                         endIcon={<KeyboardArrowRight />}
                       >
-                        Next
+                        {t('Pagination.Next')}
                       </GreyButton>
                       <GreyButton
                         onClick={() =>
@@ -509,7 +511,7 @@ export default function JourneysTable() {
                         disabled={!table.getCanNextPage()}
                         endIcon={<KeyboardDoubleArrowRight />}
                       >
-                        Last
+                        {t('Pagination.Last')}
                       </GreyButton>
                     </Stack>
                     <Stack direction="row" alignItems="center" spacing={2}>
@@ -527,9 +529,9 @@ export default function JourneysTable() {
                         )}
                       </Box>
                       <Typography variant="body2" color="text.secondary">
-                        Page{" "}
+                        {t('Pagination.Page')}{" "}
                         <strong>
-                          {table.getState().pagination.pageIndex + 1} of{" "}
+                          {table.getState().pagination.pageIndex + 1} {t('Pagination.Of')}{" "}
                           {table.getPageCount() === 0
                             ? 1
                             : table.getPageCount()}
@@ -551,12 +553,12 @@ export default function JourneysTable() {
         fullWidth
         TransitionProps={{ onEntered: () => nameInputRef.current?.focus() }}
       >
-        <DialogTitle>Create New Journey</DialogTitle>
+        <DialogTitle>{t('Dialog.CreateTitle')}</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
             id="name"
-            label="Journey Name"
+            label={t('Settings.Name')}
             type="text"
             fullWidth
             variant="standard"
@@ -571,12 +573,12 @@ export default function JourneysTable() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog}>Cancel</Button>
+          <Button onClick={closeDialog}>{t('Settings.Cancel')}</Button>
           <Button
             onClick={handleCreateJourney}
             disabled={!journeyName.trim() || createJourneyMutation.isPending}
           >
-            {createJourneyMutation.isPending ? "Creating..." : "Create"}
+            {createJourneyMutation.isPending ? t('Dialog.Creating') : t('Dialog.Create')}
           </Button>
         </DialogActions>
       </Dialog>

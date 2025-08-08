@@ -1,0 +1,337 @@
+{
+  "Header": {
+    "BranchSelect": {
+      "MainBranch": "main",
+      "YourBranches": "your branches",
+      "NewBranch": "New Branch",
+      "CreateNewBranchTitle": "Create a new branch",
+      "CreateNewBranchDescription": "Create a new branch based off of the main branch",
+      "NewBranchLocalWarning": "Your branch will be created locally. You will need to commit and push it to see it in GitHub.",
+      "CreateNewBranchButton": "Create new branch"
+    },
+    "GitActions": {
+      "Actions": "Actions",
+      "CommitAndPush": "Commit and Push",
+      "OpenPullRequest": "Open Pull Request",
+      "GithubRepository": "Github Repository"
+    }
+  },
+  "Navigation": {
+    "Dashboard": "Dashboard",
+    "Journeys": "Journeys",
+    "Segments": "Segments",
+    "Broadcasts": "Broadcasts",
+    "Templates": "Templates",
+    "Users": "Users",
+    "Events": "Events",
+    "Deliveries": "Deliveries",
+    "Settings": "Settings",
+    "UserProperties": "User Properties",
+    "SubscriptionGroups": "Subscription Groups",
+    "Analysis": "Analysis",
+    "Groups": {
+      "Reporting": "Reporting",
+      "Messaging": "Messaging",
+      "Audience": "Audience",
+      "Support": "Support"
+    },
+    "Items": {
+      "Analysis": "Analysis",
+      "Deliveries": "Deliveries",
+      "Journeys": "Journeys",
+      "MessageTemplates": "Message Templates",
+      "Broadcasts": "Broadcasts",
+      "Users": "Users",
+      "Segments": "Segments",
+      "UserProperties": "User Properties",
+      "SubscriptionGroups": "Subscription Groups",
+      "Events": "Events",
+      "Documentation": "Documentation",
+      "ContactUs": "Contact Us"
+    },
+    "Descriptions": {
+      "Analysis": "Analyze metrics across your entire workspace.",
+      "Deliveries": "See which messages were delivered to which users.",
+      "Journeys": "View and, create, and edit user journeys.",
+      "MessageTemplates": "View, create, and edit message templates.",
+      "Broadcasts": "Broadcast one off messages to users.",
+      "Users": "View users, and their histories.",
+      "Segments": "View, create, and edit segments.",
+      "UserProperties": "Manage the properties which are recorded and computed for users.",
+      "SubscriptionGroups": "Manage subscription groups of users.",
+      "Events": "View user events.",
+      "Documentation": "Documentation with instructions and guidelines on how to use Dittofeed.",
+      "ContactUs": "Contact details.",
+      "ComingSoon": "Coming Soon: {description}"
+    }
+  },
+  "Broadcasts": {
+    "Title": "Broadcasts",
+    "createAction": "Create Broadcast",
+    "Description": "Send one-time messages to user segments.",
+    "CreateNew": "New Broadcast",
+    "NoBroadcasts": "No broadcasts found. Create your first broadcast to get started.",
+    "Status": {
+      "Draft": "Draft",
+      "Scheduled": "Scheduled",
+      "Running": "Running",
+      "Completed": "Completed",
+      "Cancelled": "Cancelled"
+    },
+    "Actions": {
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "Duplicate": "Duplicate",
+      "Send": "Send",
+      "Cancel": "Cancel"
+    }
+  },
+  "JourneyEditor": {
+    "Header": {
+      "Title": "Journeys",
+      "Description": "Automate messages based on user actions."
+    },
+    "Actions": {
+      "CreateNew": "New Journey",
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "Duplicate": "Duplicate",
+      "Start": "Start",
+      "Stop": "Stop",
+      "Pause": "Pause",
+      "Actions": "Actions"
+    },
+    "Nodes": {
+      "Entry": {
+        "Label": "Entry"
+      },
+      "Email": {
+        "Label": "Send Email"
+      },
+      "Wait": {
+        "Label": "Wait"
+      },
+      "Exit": {
+        "Label": "Exit"
+      },
+      "Webhook": {
+        "Label": "Webhook"
+      },
+      "Sms": {
+        "Label": "Send SMS"
+      },
+      "MobilePush": {
+        "Label": "Mobile Push"
+      }
+    },
+    "Settings": {
+      "Save": "Save Changes",
+      "Cancel": "Cancel",
+      "Name": "Journey Name",
+      "Description": "Description",
+      "Status": "Status"
+    },
+    "Status": {
+      "NotStarted": "Not Started",
+      "Running": "Running",
+      "Paused": "Paused",
+      "Broadcast": "Broadcast"
+    },
+    "Table": {
+      "Name": "Name",
+      "Status": "Status",
+      "CreatedAt": "Created At",
+      "NoJourneys": "No journeys found.",
+      "SortBy": "Sort by"
+    },
+    "Time": {
+      "YourDevice": "Your device"
+    },
+    "Pagination": {
+      "First": "First",
+      "Previous": "Previous",
+      "Next": "Next",
+      "Last": "Last",
+      "Page": "Page",
+      "Of": "of"
+    },
+    "Dialog": {
+      "CreateTitle": "Create New Journey",
+      "Create": "Create",
+      "Creating": "Creating..."
+    },
+    "Notifications": {
+      "SaveSuccess": "Journey created successfully!",
+      "SaveError": "Failed to create journey.",
+      "DeleteSuccess": "Journey deleted successfully!",
+      "DeleteError": "Failed to delete journey. Please try again.",
+      "LoadError": "Failed to load journeys."
+    }
+  },
+  "Segments": {
+    "Title": "Segments",
+    "Description": "Create user segments based on properties and behaviors.",
+    "CreateNew": "New Segment",
+    "NoSegments": "No segments found. Create your first segment to get started.",
+    "Actions": {
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "Duplicate": "Duplicate",
+      "ViewUsers": "View Users"
+    },
+    "Editor": {
+      "Name": "Segment Name",
+      "Description": "Description",
+      "Conditions": "Conditions",
+      "AddCondition": "Add Condition",
+      "Save": "Save Segment",
+      "Cancel": "Cancel"
+    },
+    "UserCount": "Users"
+  },
+  "Templates": {
+    "Title": "Templates",
+    "Description": "Create and manage message templates for different channels.",
+    "CreateNew": "New Template",
+    "NoTemplates": "No templates found. Create your first template to get started.",
+    "Types": {
+      "Email": "Email",
+      "Sms": "SMS",
+      "MobilePush": "Mobile Push",
+      "Webhook": "Webhook"
+    },
+    "Actions": {
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "Duplicate": "Duplicate",
+      "Preview": "Preview"
+    },
+    "Editor": {
+      "Name": "Template Name",
+      "Subject": "Subject",
+      "Body": "Body",
+      "Save": "Save Template",
+      "Cancel": "Cancel",
+      "Preview": "Preview"
+    }
+  },
+  "Users": {
+    "Title": "Users",
+    "Description": "View and manage your users.",
+    "NoUsers": "No users found.",
+    "Search": "Search users...",
+    "UserDetails": "User Details",
+    "Properties": "Properties",
+    "Events": "Events",
+    "Deliveries": "Deliveries",
+    "Actions": {
+      "ViewProfile": "View Profile",
+      "SendMessage": "Send Message",
+      "Export": "Export"
+    }
+  },
+  "Settings": {
+    "Title": "Settings",
+    "Sections": {
+      "General": "General",
+      "Email": "Email",
+      "Sms": "SMS",
+      "MobilePush": "Mobile Push",
+      "Webhook": "Webhook",
+      "Integration": "Integration",
+      "Billing": "Billing"
+    },
+    "General": {
+      "WorkspaceName": "Workspace Name",
+      "Timezone": "Timezone",
+      "Language": "Language",
+      "Save": "Save Settings"
+    },
+    "Email": {
+      "Provider": "Email Provider",
+      "SmtpHost": "SMTP Host",
+      "SmtpPort": "SMTP Port",
+      "Username": "Username",
+      "Password": "Password",
+      "FromEmail": "From Email",
+      "FromName": "From Name"
+    }
+  },
+  "Common": {
+    "Actions": {
+      "Save": "Save",
+      "Cancel": "Cancel",
+      "Delete": "Delete",
+      "Edit": "Edit",
+      "Create": "Create",
+      "Update": "Update",
+      "Search": "Search",
+      "Filter": "Filter",
+      "Export": "Export",
+      "Import": "Import",
+      "Duplicate": "Duplicate",
+      "Preview": "Preview",
+      "Send": "Send",
+      "Back": "Back",
+      "Next": "Next",
+      "Previous": "Previous",
+      "Close": "Close",
+      "Submit": "Submit",
+      "Reset": "Reset",
+      "Confirm": "Confirm"
+    },
+    "Status": {
+      "Active": "Active",
+      "Inactive": "Inactive",
+      "Draft": "Draft",
+      "Published": "Published",
+      "Scheduled": "Scheduled",
+      "Running": "Running",
+      "Completed": "Completed",
+      "Cancelled": "Cancelled",
+      "Failed": "Failed",
+      "Pending": "Pending"
+    },
+    "Messages": {
+      "Loading": "Loading...",
+      "NoData": "No data available",
+      "Error": "An error occurred",
+      "Success": "Success!",
+      "Warning": "Warning",
+      "Info": "Information",
+      "Saving": "Saving...",
+      "Saved": "Saved",
+      "Deleting": "Deleting...",
+      "Deleted": "Deleted",
+      "ConfirmDelete": "Are you sure you want to delete this item?",
+      "UnsavedChanges": "You have unsaved changes. Are you sure you want to leave?"
+    },
+    "Form": {
+      "Required": "This field is required",
+      "Invalid": "Invalid format",
+      "TooShort": "Too short",
+      "TooLong": "Too long",
+      "InvalidEmail": "Invalid email address",
+      "InvalidUrl": "Invalid URL",
+      "InvalidPhone": "Invalid phone number",
+      "Name": "Name",
+      "Email": "Email",
+      "Phone": "Phone",
+      "Description": "Description",
+      "Notes": "Notes",
+      "Tags": "Tags",
+      "CreatedAt": "Created At",
+      "UpdatedAt": "Updated At"
+    },
+    "Pagination": {
+      "Previous": "Previous",
+      "Next": "Next",
+      "Page": "Page",
+      "Of": "of",
+      "PerPage": "per page",
+      "Total": "Total",
+      "Showing": "Showing",
+      "Results": "results"
+    }
+  }
+}

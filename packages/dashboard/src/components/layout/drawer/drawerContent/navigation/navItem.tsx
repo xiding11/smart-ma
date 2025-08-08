@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useAppStore } from "../../../../../lib/appStore";
+import { useNamespacedTranslations } from "../../../../../lib/translations";
 // project import
 import { MenuItem } from "../../../../menuItems/types";
 
@@ -24,8 +25,9 @@ function NavItem({ item, level }: { level: number; item: MenuItem }) {
   const drawerOpen = useAppStore((state) => state.drawerOpen);
   const textColor = "text.primary";
   const iconSelectedColor = "primary.main";
+  const t = useNamespacedTranslations('Navigation');
   const description = item.disabled
-    ? `Coming Soon: ${item.description}`
+    ? t('Descriptions.ComingSoon', { description: item.description })
     : item.description;
 
   return (

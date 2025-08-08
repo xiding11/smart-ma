@@ -5,6 +5,7 @@ const nextConfig = {
   typescript: {
     tsconfigPath: "./tsconfig.build.json",
   },
+
   basePath: "/dashboard",
   output: process.env.NEXT_STANDALONE !== "false" ? "standalone" : undefined,
   pageExtensions: ["page.tsx", "page.ts"],
@@ -18,6 +19,10 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ["*"],
+  },
+  i18n: {
+    locales: ['en', 'zh'],
+    defaultLocale: 'zh',
   },
   async headers() {
     return [
@@ -44,7 +49,6 @@ const nextConfig = {
     ];
   },
   experimental: {
-    newNextLinkBehavior: true,
     instrumentationHook: true,
     outputFileTracingRoot: path.join(__dirname, "../../"),
   },
