@@ -1,21 +1,29 @@
-import { useRouter } from 'next/router';
-import { useTransition } from 'react';
+import { switchLanguage, useLocale } from '../lib/translations';
 
 export default function LanguageSwitcher() {
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const currentLocale = useLocale();
 
   function onSelectChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    const nextLocale = event.target.value;
-    startTransition(() => {
-      router.push(router.asPath, router.asPath, { locale: nextLocale });
-    });
+    const nextLocale = event.target.value as 'en' | 'zh';
+    if (nextLocale !== currentLocale) {
+      switchLanguage(nextLocale);
+    }
   }
 
   return (
-    <select onChange={onSelectChange} defaultValue={router.locale || 'en'} disabled={isPending}>
-      <option value="en">English</option>
-      <option value="zh">中文</option>
+    <select
+      onChange={onSelectChange}
+      value={currentLocale}
+      style={{
+        padding: '4px 8px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        fontSize: '14px',
+        cursor: 'pointer'
+      }}
+    >
+      <option value="en">🌐 English</option>
+      <option value="zh">🌐 中文</option>
     </select>
   );
 }

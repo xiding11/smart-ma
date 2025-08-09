@@ -55,6 +55,18 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/zh/:path*',
+        destination: '/:path*',
+      },
+      {
+        source: '/en/:path*',
+        destination: '/:path*',
+      },
+    ];
+  },
   experimental: {
     instrumentationHook: true,
     outputFileTracingRoot: path.join(__dirname, "../../"),

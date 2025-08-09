@@ -25,6 +25,7 @@ import React, { lazy, Suspense } from "react";
 import { useAppStorePick } from "../../../lib/appStore";
 import ExternalLink from "../../externalLink";
 import { GitBranchIcon } from "../../gitBranchIcon";
+import LanguageSwitcher from "../../LanguageSwitcher";
 import MobileSection from "./headerContent/mobileSection";
 // project import
 import Profile from "./headerContent/profile";
@@ -318,6 +319,12 @@ function HeaderContent() {
       <Box sx={{ width: "100%", ml: { xs: 0, md: 1 } }} />
       {matchesXs && <Box sx={{ width: "100%", ml: 1 }} />}
       <GitActionsSelect />
+
+      {/* Language Switcher */}
+      <Box sx={{ mx: 1 }}>
+        <LanguageSwitcher />
+      </Box>
+
       {!features.WhiteLabel ? (
         <IconButton
           component={Link}
