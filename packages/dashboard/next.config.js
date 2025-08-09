@@ -85,14 +85,14 @@ const nextConfig = {
         readline: false,
         worker_threads: false,
       };
-      
+
       // Add externals to completely exclude backend-lib server modules from client bundle
       config.externals = config.externals || [];
-      config.externals.push(function({ context, request }, callback) {
+      config.externals.push(function ({ context, request }, callback) {
         // Exclude all backend-lib modules from client bundle except types
-        if (request && request.startsWith('backend-lib/src/') && 
-            !request.includes('/types') && 
-            !request.includes('/constants')) {
+        if (request && request.startsWith('backend-lib/src/') &&
+          !request.includes('/types') &&
+          !request.includes('/constants')) {
           return callback(null, 'commonjs ' + request);
         }
         return callback();
