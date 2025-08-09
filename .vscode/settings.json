@@ -33,5 +33,6 @@
     "terminal.integrated.env.linux": {
         "NODE_ENV": "development"
     },
-    "notebook.codeActionsOnSave": {}
+    "notebook.codeActionsOnSave": {},
+    "editor.dropIntoEditor.preferences": []
 }

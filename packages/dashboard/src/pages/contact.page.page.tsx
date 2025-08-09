@@ -1,4 +1,5 @@
 import { Box, Stack, useTheme } from "@mui/material";
+import { GetServerSideProps } from "next";
 
 import DashboardContent from "../components/dashboardContent";
 import DiscordLink from "../components/discordLink";
@@ -33,3 +34,10 @@ export default function Contact() {
     </DashboardContent>
   );
 }
+
+// Make this page dynamic to avoid static pre-rendering issues with zustand context
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {},
+  };
+};

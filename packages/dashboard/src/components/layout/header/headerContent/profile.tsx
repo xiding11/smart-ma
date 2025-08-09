@@ -34,7 +34,9 @@ interface ProfileState {
 
 function Profile() {
   const theme = useTheme();
-  const path = useRouter();
+  const router = useRouter();
+  // SSR-safe router access
+  const path = typeof window !== 'undefined' ? router : { pathname: '', query: {}, asPath: '' };
 
   const anchorRef = useRef<null | HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -168,9 +170,11 @@ function Profile() {
                         options={options}
                         disableClearable
                         onChange={(_e, newValue) => {
-                          path.push(
-                            `/select-workspace?workspaceId=${newValue.id}`,
-                          );
+                          if (typeof window !== 'undefined' && router.push) {
+                            router.push(
+                              `/select-workspace?workspaceId=${newValue.id}`,
+                            );
+                          }
                         }}
                         renderInput={(params) => (
                           <TextField {...params} label="Current Workspace" />

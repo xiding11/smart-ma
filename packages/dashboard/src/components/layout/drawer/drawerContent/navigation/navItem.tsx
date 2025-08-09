@@ -20,7 +20,8 @@ import { MenuItem } from "../../../../menuItems/types";
 function NavItem({ item, level }: { level: number; item: MenuItem }) {
   const theme = useTheme();
   const Icon = item.icon;
-  const path = useRouter();
+  const router = useRouter();
+  const path = typeof window !== 'undefined' ? router : { asPath: '', pathname: '', query: {} };
   const isSelected = item.url === path.asPath;
   const drawerOpen = useAppStore((state) => state.drawerOpen);
   const textColor = "text.primary";
@@ -87,11 +88,11 @@ function NavItem({ item, level }: { level: number; item: MenuItem }) {
               }),
               ...(!drawerOpen &&
                 isSelected && {
+                bgcolor: "primary.lighter",
+                "&:hover": {
                   bgcolor: "primary.lighter",
-                  "&:hover": {
-                    bgcolor: "primary.lighter",
-                  },
-                }),
+                },
+              }),
             }}
           >
             <Icon />

@@ -18,7 +18,8 @@ import { MenuItem } from "../../../../menuItems/types";
 
 function MinimalNavItem({ item, level }: { level: number; item: MenuItem }) {
   const Icon = item.icon as SvgIconComponent;
-  const path = useRouter();
+  const router = useRouter();
+  const path = typeof window !== 'undefined' ? router : { asPath: '', pathname: '', query: {} };
   const isSelected = item.url === path.asPath;
   const drawerOpen = useAppStore((state) => state.drawerOpen);
   const description = item.disabled

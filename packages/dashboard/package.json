@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NEXT_PRIVATE_PREBUILD_PAGES=false NODE_ENV=production next build --no-lint",
+    "build:original": "next build",
     "start": "next start",
     "check": "tsc --build",
     "build-ts": "NODE_ENV=production tsc --build",
